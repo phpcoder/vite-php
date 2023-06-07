@@ -1,0 +1,113 @@
+:root {
+	/* colors */
+	--white: #f9f9f9;
+	--black: #36383F;
+	--grey: #505050;
+	--bg-color: #e0e6fa;
+	--car-bg-color: #c7d2f6;
+	font-size: 16px;
+}
+
+/* Reset */
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+}
+
+body {
+	background-color: var(--white);
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	line-height: 1.5;
+	color: var(--grey);
+	background-color: var(--bg-color);
+}
+
+section {
+	padding: 2rem;
+}
+
+h1 {
+	text-align: center;
+	font-size: calc(1rem + 2vw);
+	font-weight: 400;
+	margin-bottom: 3rem;
+}
+.carousel-container {
+	margin: 0 auto;
+}
+
+.carousel-item {
+	height: 14rem;
+	font-size: calc(2rem + 5vw);
+	color: var(--bg-color);
+	background-color: var(--car-bg-color);
+	border: 6px solid var(--bg-color);
+	border-left: 3px solid var(--bg-color);
+	border-right: 3px solid var(--bg-color);
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+footer {
+	position: fixed;
+	bottom: 0;
+	left: 0;
+	text-align: center;
+	width: 100%;
+	padding: 1rem;
+}
+
+
+/* Carousel */
+
+
+.carousel-container {
+	overflow: hidden;
+}
+.carousel {
+	display: flex;
+	flex-direction: row;
+	flex-wrap: nowrap;
+}
+.carousel-item {
+	flex: 1 1 0;
+}
+
+
+/*
+	Mixin for carousel media queries
+	arguments: 
+	- carousel id
+	- breakpoints map
+	- total number of carousel items (max visible items + 1)
+*/
+@mixin carousel-bp($carousel-id, $breakpoints, $total) {
+	@each $breakpoint, $items in $breakpoints {
+		@media (min-width: #{$breakpoint}px) {
+			#{$carousel-id} .carousel {
+				width: calc( 100% * $total / $items );
+			}
+		}
+	}
+}
+
+
+
+/* 
+	Carousel Breakpoints (px) and Number of Visible Items (n)
+	Total number of items should be max(n) + 1
+*/
+
+$carousel-breakpoints: (
+//	px    n
+	0 :   1,
+	480:  2,
+	800:  3,
+	1200: 4
+);
+
+
+@include carousel-bp('#carousel', $carousel-breakpoints, 6);
+
